@@ -2,7 +2,7 @@ require("dotenv").config();  // Load environment variables from a .env file
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-
+const authRoutes = require('./routes/auth-routes/index')
 const app = express();  // Initialize the Express app
 
 // Constants for configuration
@@ -28,6 +28,9 @@ mongoose
     console.error("Database connection error:", error);  // Log connection errors
     process.exit(1);  // Exit process on connection failure
   });
+//routes connection
+app.use("/auth", authRoutes)
+
 
 // Error-handling middleware
 app.use((err, req, res, next) => {
