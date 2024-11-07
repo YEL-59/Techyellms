@@ -5,6 +5,7 @@ import RouteGuard from "./components/Route-Guard";
 import { useContext } from "react";
 import { AuthContext } from "./Context/Auth-Context";
 import InstructorDashboardpage from "./Pages/Instructor";
+import AddNewCoursePage from "./Pages/Instructor/add-new-course";
 
 function App() {
   const {auth}=useContext(AuthContext)
@@ -26,6 +27,16 @@ function App() {
         element={
           <RouteGuard
             element={<InstructorDashboardpage />}
+            authenticated={auth?.authenticate}
+            user={auth?.user}
+          />
+        }
+      />
+       <Route
+        path="/instructor/create-new-course"
+        element={
+          <RouteGuard
+            element={<AddNewCoursePage />}
             authenticated={auth?.authenticate}
             user={auth?.user}
           />
