@@ -2,7 +2,11 @@ require("dotenv").config();  // Load environment variables from a .env file
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const authRoutes = require('./routes/auth-routes/index')
+const authRoutes = require("./routes/auth-routes/index");
+const mediaRoutes = require("./routes/instructor-routes/media-routes");
+const instructorCourseRoutes = require("./routes/instructor-routes/course-routes");
+
+
 const app = express();  // Initialize the Express app
 
 // Constants for configuration
@@ -30,7 +34,8 @@ mongoose
   });
 //routes connection
 app.use("/auth", authRoutes)
-
+app.use("/media", mediaRoutes);
+app.use("/instructor/course", instructorCourseRoutes);
 
 // Error-handling middleware
 app.use((err, req, res, next) => {

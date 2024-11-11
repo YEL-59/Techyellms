@@ -1,7 +1,5 @@
-
 import InstructorCourses from "@/components/Instructor-View/Courses";
 import InstructorDashboard from "@/components/Instructor-View/DashBoard";
-
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AuthContext } from "@/Context/Auth-Context";
@@ -13,24 +11,30 @@ import { useContext, useEffect, useState } from "react";
 function InstructorDashboardpage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const { resetCredentials } = useContext(AuthContext);
+  const { instructorCoursesList, setInstructorCoursesList } =
+    useContext(InstructorContext);
 
+  async function fetchAllCourses() {
+    const response = await fetchInstructorCourseListService();
+    if (response?.success) setInstructorCoursesList(response?.data);
+  }
 
-
-
-
+  useEffect(() => {
+    fetchAllCourses();
+  }, []);
 
   const menuItems = [
     {
       icon: BarChart,
       label: "Dashboard",
       value: "dashboard",
-      component: <InstructorDashboard />,
+      component: <InstructorDashboard listOfCourses={instructorCoursesList} />,
     },
     {
       icon: Book,
       label: "Courses",
       value: "courses",
-      component: <InstructorCourses  />,
+      component: <InstructorCourses listOfCourses={instructorCoursesList} />,
     },
     {
       icon: LogOut,
@@ -45,7 +49,7 @@ function InstructorDashboardpage() {
     sessionStorage.clear();
   }
 
-  //console.log(instructorCoursesList, "instructorCoursesList");
+  console.log(instructorCoursesList, "instructorCoursesList");
 
   return (
     <div className="flex h-full min-h-screen bg-gray-100">
